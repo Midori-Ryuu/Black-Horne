@@ -8,8 +8,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Black-Horne";
 		cfg.useGL20 = true;
-		cfg.width = 1920;
-		cfg.height = 1080;
+		cfg.width = 800;
+		cfg.height = 480;
 		
 		new LwjglApplication(new BlackHorne(), cfg);
 	}
