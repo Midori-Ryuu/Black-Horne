@@ -17,7 +17,7 @@ public class Expires extends Component {
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 		expiresTimer.update(delta);
 	}
 

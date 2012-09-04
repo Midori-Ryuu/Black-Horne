@@ -11,7 +11,7 @@ import com.apollo.utils.ImmutableBag;
 
 public class World {
 	public static boolean DEBUG;
-	
+
 	private EntityManager entityManager;
 
 	private Bag<Entity> added;
@@ -20,33 +20,37 @@ public class World {
 
 	private Map<Class<? extends Manager>, Manager> managers;
 	private Bag<Manager> managersBag;
-	
-	private Map<String,EntityBuilder> entityBuildersByType;
 
-	public World() {
+	private Map<String, EntityBuilder> entityBuildersByType;
+
+	private com.badlogic.gdx.physics.box2d.World worldB;
+
+	public World(com.badlogic.gdx.physics.box2d.World worldB) {
 		entityManager = new EntityManager();
-		
+
 		added = new Bag<Entity>();
 		addedManagers = new Bag<Manager>();
 		deleted = new Bag<Entity>();
-		
+
 		managers = new LinkedHashMap<Class<? extends Manager>, Manager>();
 		managersBag = new Bag<Manager>();
 		setManager(entityManager);
-		
+
 		entityBuildersByType = new HashMap<String, EntityBuilder>();
+
+		this.worldB = worldB;
 	}
 
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
-	
+
 	public void addEntity(Entity e) {
 		added.add(e);
 	}
-	
+
 	public void deleteEntity(Entity e) {
-		if(!deleted.contains(e)) {
+		if (!deleted.contains(e)) {
 			deleted.add(e);
 		}
 	}
@@ -57,11 +61,11 @@ public class World {
 		addedManagers.add(manager);
 		manager.setWorld(this);
 	}
-	
+
 	public <T extends Manager> T getManager(Class<T> managerType) {
 		return managerType.cast(managers.get(managerType));
 	}
-	
+
 	public void setEntityBuilder(String builderType, EntityBuilder entityBuilder) {
 		entityBuildersByType.put(builderType, entityBuilder);
 	}
@@ -72,30 +76,30 @@ public class World {
 
 	public Entity createEntity(String builderType) {
 		EntityBuilder entityBuilder = entityBuildersByType.get(builderType);
-		if(entityBuilder != null) {
-			return entityBuilder.buildEntity(this);
+		if (entityBuilder != null) {
+			return entityBuilder.buildEntity(this, worldB);
 		}
 		return null;
 	}
-	
+
 	private void addEntities() {
-		for(int i = 0; added.size() > i; i++) {
+		for (int i = 0; added.size() > i; i++) {
 			Entity e = added.get(i);
 
-			for(Manager mgr : managers.values()) {
+			for (Manager mgr : managers.values()) {
 				mgr.added(e);
 			}
 		}
-		for(int i = 0; added.size() > i; i++) {
+		for (int i = 0; added.size() > i; i++) {
 			Entity e = added.get(i);
 			entityManager.applyComponentAnnotations(e);
 			e.initialize();
 		}
 		added.clear();
 	}
-	
+
 	private void initManagers() {
-		for(Manager manager : addedManagers) {
+		for (Manager manager : addedManagers) {
 			manager.applyAnnotations();
 			manager.initialize();
 		}
@@ -103,48 +107,48 @@ public class World {
 	}
 
 	private void deleteEntities() {
-		for(int i = 0; deleted.size() > i; i++) {
+		for (int i = 0; deleted.size() > i; i++) {
 			Entity e = deleted.get(i);
-			
-			for(Manager mgr : managersBag){
+
+			for (Manager mgr : managersBag) {
 				mgr.removed(e);
 			}
-			
+
 			e.uninitialize();
-			
+
 			e.setDeleted(true);
 		}
 		deleted.clear();
 	}
-	
+
 	public void deleteAllEntities() {
 		ImmutableBag<Entity> entities = entityManager.getEntities();
 		deleted.addAll(entities);
 		deleteEntities();
 	}
-	
+
 	public void update(float delta) {
-		if(!addedManagers.isEmpty()) {
+		if (!addedManagers.isEmpty()) {
 			initManagers();
 		}
-		
-		if(!deleted.isEmpty()) {
+
+		if (!deleted.isEmpty()) {
 			deleteEntities();
 		}
-		
-		if(!added.isEmpty()) {
+
+		if (!added.isEmpty()) {
 			addEntities();
 		}
-		
-		for(Manager mgr : managersBag){
+
+		for (Manager mgr : managersBag) {
 			mgr.update(delta);
 		}
-		
+
 		ImmutableBag<Entity> entities = entityManager.getEntities();
 		for (int i = 0, s = entities.size(); s > i; i++) {
 			Entity entity = entities.get(i);
 			entity.update(delta);
 		}
 	}
-	
+
 }

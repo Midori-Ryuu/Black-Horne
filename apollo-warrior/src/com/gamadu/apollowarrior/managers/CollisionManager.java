@@ -43,7 +43,7 @@ public class CollisionManager extends Manager {
 	}
 	
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 		// Player bullets collide with computer ships.
 		for(int a = 0; playerBullets.size() > a; a++) {
 			Entity playerBullet = playerBullets.get(a);

@@ -19,7 +19,7 @@ public class Movement extends Component {
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 		transform.addX(delta * vx);
 		transform.addY(delta * vy);
 	}

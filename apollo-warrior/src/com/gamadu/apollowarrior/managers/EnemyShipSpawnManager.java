@@ -28,7 +28,7 @@ public class EnemyShipSpawnManager extends Manager {
 	}
 	
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 		spawnTimer.update(delta);
 	}
 

@@ -48,7 +48,7 @@ public abstract class Node<T> extends Spatial<T> {
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 		for (int i = 0; children.size() > i; i++) {
 			children.get(i).update(delta);
 		}

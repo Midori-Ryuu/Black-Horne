@@ -79,7 +79,7 @@ public class EnemyShipBuilder implements EntityBuilder {
 			}
 			
 			@Override
-			public void update(int delta) {
+			public void update(float delta) {
 				expiresTimer.update(delta);
 			}
 		};
@@ -93,7 +93,7 @@ public class EnemyShipBuilder implements EntityBuilder {
 			Transform transform;
 			
 			@Override
-			public void update(int delta) {
+			public void update(float delta) {
 				if(transform.getX() < 0) {
 					transform.setX(0);
 					movement.setVx(-movement.getVx());

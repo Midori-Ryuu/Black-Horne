@@ -22,7 +22,7 @@ public class Health extends Component {
 	}
 	
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 		if(killed) {
 			owner.fireEvent("KILLED");
 		}

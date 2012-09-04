@@ -26,7 +26,7 @@ public abstract class Spatial<T> extends Component {
 	}
 
 	@Override
-	public void update(int delta) {
+	public void update(float delta) {
 	}
 	
 	public abstract void render(T graphicsContext);
