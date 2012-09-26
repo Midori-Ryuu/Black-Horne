@@ -20,9 +20,13 @@ public final class Entity {
 	}
 
 	public void setComponent(Component component) {
+		//System.out.println(this);
+		
 		component.setOwner(this);
 		components.add(component);
+		
 		componentsByType.put(component.getType(), component);
+		
 	}
 	
 	public void removeComponent(Class<? extends Component> clazz) {

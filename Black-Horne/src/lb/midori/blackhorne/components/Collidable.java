@@ -4,6 +4,7 @@ import com.apollo.Component;
 import com.apollo.annotate.InjectComponent;
 import com.apollo.components.Transform;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -21,19 +22,19 @@ public class Collidable extends Component {
 	private boolean collided;
 
 	public Collidable(com.badlogic.gdx.physics.box2d.World worldB, BodyType bodyType, String userData, PolygonShape box, float x, float y, float density, float friction) {
-		//super();
-
+		// super();
+		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = bodyType; //
-		//System.out.println(transform);
-				
+		// System.out.println(transform);
+
 		bodyDef.position.set(x * CConstants.rB, y * CConstants.rB);
-		bodyDef.angle = 0f*MathUtils.degreesToRadians;
+		bodyDef.angle = 0f * MathUtils.degreesToRadians;
 
 		body = worldB.createBody(bodyDef);
 
 		if (bodyType == BodyType.StaticBody) {
-			body.createFixture(box, 0.0f);
+			body.createFixture(box, 1.0f);
 		} else {
 			FixtureDef fixtureDef = new FixtureDef();
 			fixtureDef.shape = box;
@@ -75,14 +76,22 @@ public class Collidable extends Component {
 
 	@Override
 	public void update(float delta) {
-		
-		transform.setX(body.getPosition().x*CConstants.bR);
-		transform.setY(body.getPosition().y*CConstants.bR);
+		//this.getComponentFromOwner(Renderable.class);
+		// body.getTransform().setPosition(new Vector2(100f,100f));
+		if (transform == null)
+			return;
+		transform.setX(body.getPosition().x * CConstants.bR);
+		transform.setY(body.getPosition().y * CConstants.bR);
 		if (collided == true) {
 			System.out.println("From update: ---  This" + body.getUserData() + " has collided with" + collidedBody.getUserData());
+
 			collided = false;
 		}
-		System.out.println(body.getPosition().x*CConstants.bR + "   " + body.getPosition().y*CConstants.bR+"    "+ body.getTransform().getRotation());
-		transform.setRotation(body.getAngle()*MathUtils.radiansToDegrees);
+		
+		
+		
+		//transform.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+		transform.setRotation(0);
+		body.setTransform(transform.x* CConstants.rB, transform.y* CConstants.rB, 0);
 	}
 }

@@ -17,10 +17,13 @@ public abstract class Component {
 	}
 
 	public void setOwner(Entity owner) {
+
 		this.owner = owner;
+	
 	}
 
 	public Entity getOwner() {
+		
 		return owner;
 	}
 
@@ -35,6 +38,7 @@ public abstract class Component {
 	}
 
 	public <T extends Component> T getComponentFromOwner(Class<T> family) {
+		System.out.println(owner);
 		return owner.getComponent(family);
 	}
 
