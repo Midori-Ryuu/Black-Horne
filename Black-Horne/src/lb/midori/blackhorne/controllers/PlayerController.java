@@ -88,37 +88,47 @@ public class PlayerController {
 		//	System.out.println("WHYYYYYYYYYYYYYY::::::::::::::::::::");
 			return;
 		}
-		
+		System.out.println(collidable.getBody().getLinearVelocity().x);
 	//	System.out.println("DOnnnnnnoooooo:::::::::::::::::");
 
 		if (keys.get(Keys.JUMP)) {
-			if (Math.abs(collidable.getBody().getLinearVelocity().y) < 0.01) {
+		//	if (Math.abs(collidable.getBody().getLinearVelocity().y) < 0.01) {
 				collidable.getBody().setLinearVelocity(collidable.getBody().getLinearVelocity().x, 5f);
+				
 				System.out.println("JUMPING::::::::::::::");
 				//renderable.setState(3);
-			}
+		//	}
 		}
 
 		if (keys.get(Keys.LEFT)) {
-
-			if (Math.abs(collidable.getBody().getLinearVelocity().y) < 0.1) {
-				collidable.getBody().applyLinearImpulse((new Vector2(-0.5f, 0f)), collidable.getBody().getWorldCenter());
+			float desiredVel = -6f;
+			float velChange = desiredVel - collidable.getBody().getLinearVelocity().x;
+			float impulse = collidable.getBody().getMass() * velChange;
+	//		if (Math.abs(collidable.getBody().getLinearVelocity().y) < 0.1) {
+				collidable.getBody().applyLinearImpulse((new Vector2(impulse, 0f)), collidable.getBody().getWorldCenter());
+				
 			//	renderable.incrementTime(delta);
 			//	renderable.setState(1);
-			}
+	//		}
 		}
 
 		if (keys.get(Keys.RIGHT)) {
-
-			if (Math.abs(collidable.getBody().getLinearVelocity().y) < 0.1) {
-				collidable.getBody().applyLinearImpulse((new Vector2(0.5f, 0f)), collidable.getBody().getWorldCenter());
+			float desiredVel = 6f;
+			float velChange = desiredVel - collidable.getBody().getLinearVelocity().x;
+			float impulse = collidable.getBody().getMass() * velChange;
+	//		if (Math.abs(collidable.getBody().getLinearVelocity().y) < 0.1) {
+	//		if (Math.abs(collidable.getBody().getLinearVelocity().y) < 0.1) {
+				collidable.getBody().applyLinearImpulse((new Vector2(impulse, 0f)), collidable.getBody().getWorldCenter());
+				//collidable.getBody().applyForceToCenter(new Vector2(50f,0f));
+				
 			//	renderable.incrementTime(delta);
 			//	renderable.setState(2);
-			}
+	//		}
 		}
 
 		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) || (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
 		//	 renderable.setState(0);
+			collidable.getBody().applyLinearImpulse((new Vector2(-collidable.getBody().getLinearVelocity().x/2, 0f)), collidable.getBody().getWorldCenter());
 		}
 		
 		

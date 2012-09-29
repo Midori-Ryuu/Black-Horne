@@ -55,13 +55,13 @@ public class Renderable extends Spatial<SpriteBatch> {
 
 	@Override
 	public void update(float delta) {
-		stateTime+=delta/40f;
+		stateTime+=delta/30f;
 		if(stateTime > Float.MAX_VALUE-1)
 			stateTime=0;
 	}
 	
 	public void incrementTime(float delta) {
-		stateTime += delta / 40f;
+		stateTime += delta / 30f;
 	}
 
 	public void setState(int state) {
@@ -76,7 +76,7 @@ public class Renderable extends Spatial<SpriteBatch> {
 				state = 1;
 			else if (collidable.getBody().getLinearVelocity().x > 0.1)
 				state = 2;
-			else if (collidable.getBody().getLinearVelocity().x > -0.005 && collidable.getBody().getLinearVelocity().x < 0.005)
+			else if (collidable.getBody().getLinearVelocity().x > -0.01 && collidable.getBody().getLinearVelocity().x < 0.01)
 				state = 0;
 		}
 

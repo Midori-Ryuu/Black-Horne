@@ -32,9 +32,10 @@ public class Collidable extends Component {
 		bodyDef.angle = 0f * MathUtils.degreesToRadians;
 
 		body = worldB.createBody(bodyDef);
-
+		
 		if (bodyType == BodyType.StaticBody) {
 			body.createFixture(box, 1.0f);
+			
 		} else {
 			FixtureDef fixtureDef = new FixtureDef();
 			fixtureDef.shape = box;

@@ -124,9 +124,9 @@ public class GamePlay implements Screen, InputProcessor {
 
 	public void initEntities() {
 
-		player = playerBuilder.buildEntity(worldA, worldB, playerAnimations, 200f, 200f, 1f, 3.5f);
+		player = playerBuilder.buildEntity(worldA, worldB, playerAnimations, 200f, 200f, 1f, 1f);
 		
-		playerBuilder.buildEntity(worldA, worldB, playerAnimations, 600f, 200f, 1f, 3.5f);
+		playerBuilder.buildEntity(worldA, worldB, playerAnimations, 600f, 200f, 1f, 1f);
 		
 		playerController = new PlayerController(player);
 		collidable = player.getComponent(Collidable.class);

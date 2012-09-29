@@ -1,7 +1,5 @@
 package com.apollo.components.spatial;
 
-import lb.midori.blackhorne.components.Collidable;
-
 import com.apollo.Component;
 import com.apollo.Layer;
 import com.apollo.utils.Bag;

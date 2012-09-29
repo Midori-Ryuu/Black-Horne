@@ -38,7 +38,7 @@ public abstract class Component {
 	}
 
 	public <T extends Component> T getComponentFromOwner(Class<T> family) {
-		System.out.println(owner);
+	//	System.out.println(owner);
 		return owner.getComponent(family);
 	}
 
